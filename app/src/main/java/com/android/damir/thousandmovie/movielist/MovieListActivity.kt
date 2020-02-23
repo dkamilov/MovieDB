@@ -5,6 +5,7 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.paging.PagedList
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
@@ -30,7 +31,6 @@ class MovieListActivity : AppCompatActivity(), MovieItemClickListener, SwipeRefr
         setupRecyclerView()
         setupObservers()
         setSwipeToRefresh()
-        setupOnScrollListener()
     }
 
     override fun movieItemClicked(movie: Movie) {
@@ -50,7 +50,7 @@ class MovieListActivity : AppCompatActivity(), MovieItemClickListener, SwipeRefr
 
     private fun setupObservers(){
         movieListViewModel = ViewModelProvider(this).get(MovieListViewModel::class.java)
-        movieListViewModel.popularListLiveData.observe(this, Observer{
+        movieListViewModel.popularPagedListLiveData.observe(this, Observer{
             it?.let{updateList(it)}
         })
         movieListViewModel.isRefreshingLiveData.observe(this, Observer{ refreshing ->
@@ -72,26 +72,7 @@ class MovieListActivity : AppCompatActivity(), MovieItemClickListener, SwipeRefr
         swipeRefreshLayout.isRefreshing = false
     }
 
-    private fun updateList(movies: List<Movie>){
+    private fun updateList(movies: PagedList<Movie>){
         movieListAdapter.submitList(movies)
-    }
-
-    private fun setupOnScrollListener() {
-        val layoutManager = recyclerView.layoutManager as LinearLayoutManager
-        recyclerView.addOnScrollListener(object: RecyclerView.OnScrollListener(){
-            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
-                val totalItemCount = layoutManager.itemCount
-                val visibleItemCount = layoutManager.childCount
-                val firstVisibleItem = layoutManager.findFirstVisibleItemPosition()
-
-                if(firstVisibleItem + visibleItemCount >= totalItemCount){
-                    if(!isLoading){
-                        //TODO GET Movies(currentPage + 1)
-                        movieListViewModel.requestPopular(currentPage + 1)
-                        isLoading = true
-                    }
-                }
-            }
-        })
     }
 }

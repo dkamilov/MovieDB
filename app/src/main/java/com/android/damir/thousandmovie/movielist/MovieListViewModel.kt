@@ -4,21 +4,19 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import androidx.paging.PagedList
 import com.android.damir.thousandmovie.domain.entity.Movie
 import com.android.damir.thousandmovie.domain.repository.MovieRepository
 import com.android.damir.thousandmovie.domain.repository.MovieRepositoryImpl
+import com.android.damir.thousandmovie.movielist.pagination.MoviePageDataSource
+import com.android.damir.thousandmovie.movielist.pagination.MoviePagedListProvider
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import timber.log.Timber
+import javax.sql.DataSource
 
-class MovieListViewModel(
-    private val movieRepository: MovieRepository = MovieRepositoryImpl()
-) : ViewModel(){
-
-    private val _popularListLiveData = MutableLiveData<List<Movie>>()
-    val popularListLiveData: LiveData<List<Movie>>
-        get() = _popularListLiveData
+class MovieListViewModel : ViewModel(){
 
     private val _isRefreshingLiveData = MutableLiveData<Boolean>()
     val isRefreshingLiveData: LiveData<Boolean>
@@ -32,6 +30,8 @@ class MovieListViewModel(
     val currentPageLiveData: LiveData<Int>
         get() = _currentPageLiveData
 
+    lateinit var popularPagedListLiveData: LiveData<PagedList<Movie>>
+
     init {
         requestPopular()
     }
@@ -41,16 +41,9 @@ class MovieListViewModel(
         requestPopular()
     }
 
-    fun requestPopular(page: Int = 1) {
-        Timber.i("request popular, page = $page")
-        viewModelScope.launch {
-            val movies = withContext(Dispatchers.IO){
-                movieRepository.getPopular(page)
-            }
-            _popularListLiveData.value = movies
-            _isRefreshingLiveData.value = false
-            _isLoadingLiveData.value = false
-            _currentPageLiveData.value = page
-        }
+    private fun requestPopular(){
+        val factory = MoviePageDataSource.DataSourceFactory(viewModelScope)
+        popularPagedListLiveData = MoviePagedListProvider(factory).provide()
+        _isRefreshingLiveData.value = false
     }
 }
