@@ -1,11 +1,13 @@
 package com.android.damir.thousandmovie.movielist
 
 import android.content.Intent
+import android.content.res.Configuration
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.paging.PagedList
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
@@ -16,13 +18,13 @@ import com.android.damir.thousandmovie.moviedetails.MovieDetailsActivity
 import com.android.damir.thousandmovie.movielist.adapter.MovieItemClickListener
 import com.android.damir.thousandmovie.movielist.adapter.MovieListAdapter
 import kotlinx.android.synthetic.main.activity_popular_list.*
+import timber.log.Timber
 
-class MovieListActivity : AppCompatActivity(), MovieItemClickListener, SwipeRefreshLayout.OnRefreshListener {
+class MovieListActivity : AppCompatActivity(),
+    MovieItemClickListener {
 
     private lateinit var movieListAdapter: MovieListAdapter
     private lateinit var movieListViewModel: MovieListViewModel
-    private var isLoading = false
-    private var currentPage = 1
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -39,13 +41,15 @@ class MovieListActivity : AppCompatActivity(), MovieItemClickListener, SwipeRefr
         startActivity(intent)
     }
 
-    override fun onRefresh() {
-        movieListViewModel.refreshPopular()
-    }
-
     private fun setupRecyclerView(){
         movieListAdapter = MovieListAdapter(this)
         recyclerView.adapter = movieListAdapter
+        if(resources.configuration.orientation == Configuration.ORIENTATION_LANDSCAPE){
+            recyclerView.layoutManager = GridLayoutManager(this, 3)
+        }else{
+            recyclerView.layoutManager = LinearLayoutManager(this)
+        }
+
     }
 
     private fun setupObservers(){
@@ -56,16 +60,12 @@ class MovieListActivity : AppCompatActivity(), MovieItemClickListener, SwipeRefr
         movieListViewModel.isRefreshingLiveData.observe(this, Observer{ refreshing ->
             if(!refreshing) hideRefreshing()
         })
-        movieListViewModel.isLoadingLiveData.observe(this, Observer {
-            isLoading = it
-        })
-        movieListViewModel.currentPageLiveData.observe(this, Observer{
-            currentPage = it
-        })
     }
 
     private fun setSwipeToRefresh(){
-        swipeRefreshLayout.setOnRefreshListener(this)
+        swipeRefreshLayout.setOnRefreshListener {
+            movieListViewModel.refreshPopular()
+        }
     }
 
     private fun hideRefreshing(){
@@ -73,6 +73,7 @@ class MovieListActivity : AppCompatActivity(), MovieItemClickListener, SwipeRefr
     }
 
     private fun updateList(movies: PagedList<Movie>){
+        Timber.i("updateList")
         movieListAdapter.submitList(movies)
     }
 }

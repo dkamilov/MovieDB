@@ -25,7 +25,8 @@
             android:layout_height="wrap_content"
             android:gravity="center"
             tools:text="Spider Man"
-            style="@style/MovieText"/>
+            style="
+            @style/MovieText"/>
 
         <TextView
             android:id="@+id/releaseDate"
