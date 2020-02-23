@@ -6,13 +6,12 @@ import androidx.recyclerview.widget.ListAdapter
 import com.android.damir.thousandmovie.R
 import com.android.damir.thousandmovie.domain.entity.Movie
 
-class PopularListAdapter(
+class MovieListAdapter(
     private val movieItemClickListener: MovieItemClickListener
 ): ListAdapter<Movie, MovieItemViewHolder>(MovieDiffUtil) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MovieItemViewHolder {
-        val inflater = LayoutInflater.from(parent.context)
-        val view = inflater.inflate(R.layout.layout_item_movie, parent, false)
+        val view = LayoutInflater.from(parent.context).inflate(R.layout.item_movie, parent, false)
         return MovieItemViewHolder(view, movieItemClickListener)
     }
 

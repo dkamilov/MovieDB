@@ -4,7 +4,7 @@ import android.view.View
 import androidx.recyclerview.widget.RecyclerView
 import com.android.damir.thousandmovie.domain.entity.Movie
 import com.android.damir.thousandmovie.extension.load
-import kotlinx.android.synthetic.main.layout_item_movie.view.*
+import kotlinx.android.synthetic.main.item_movie.view.*
 
 class MovieItemViewHolder(itemView: View, private val listener: MovieItemClickListener) : RecyclerView.ViewHolder(itemView){
 

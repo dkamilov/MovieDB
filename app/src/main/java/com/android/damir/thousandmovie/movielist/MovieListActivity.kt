@@ -5,19 +5,23 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.android.damir.thousandmovie.R
 import com.android.damir.thousandmovie.domain.entity.Movie
 import com.android.damir.thousandmovie.moviedetails.MOVIE_ID_EXTRA
 import com.android.damir.thousandmovie.moviedetails.MovieDetailsActivity
 import com.android.damir.thousandmovie.movielist.adapter.MovieItemClickListener
-import com.android.damir.thousandmovie.movielist.adapter.PopularListAdapter
+import com.android.damir.thousandmovie.movielist.adapter.MovieListAdapter
 import kotlinx.android.synthetic.main.activity_popular_list.*
 
 class MovieListActivity : AppCompatActivity(), MovieItemClickListener, SwipeRefreshLayout.OnRefreshListener {
 
-    private lateinit var popularListAdapter: PopularListAdapter
+    private lateinit var movieListAdapter: MovieListAdapter
     private lateinit var movieListViewModel: MovieListViewModel
+    private var isLoading = false
+    private var currentPage = 1
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -26,6 +30,7 @@ class MovieListActivity : AppCompatActivity(), MovieItemClickListener, SwipeRefr
         setupRecyclerView()
         setupObservers()
         setSwipeToRefresh()
+        setupOnScrollListener()
     }
 
     override fun movieItemClicked(movie: Movie) {
@@ -39,8 +44,8 @@ class MovieListActivity : AppCompatActivity(), MovieItemClickListener, SwipeRefr
     }
 
     private fun setupRecyclerView(){
-        popularListAdapter = PopularListAdapter(this)
-        recyclerView.adapter = popularListAdapter
+        movieListAdapter = MovieListAdapter(this)
+        recyclerView.adapter = movieListAdapter
     }
 
     private fun setupObservers(){
@@ -50,6 +55,12 @@ class MovieListActivity : AppCompatActivity(), MovieItemClickListener, SwipeRefr
         })
         movieListViewModel.isRefreshingLiveData.observe(this, Observer{ refreshing ->
             if(!refreshing) hideRefreshing()
+        })
+        movieListViewModel.isLoadingLiveData.observe(this, Observer {
+            isLoading = it
+        })
+        movieListViewModel.currentPageLiveData.observe(this, Observer{
+            currentPage = it
         })
     }
 
@@ -62,6 +73,25 @@ class MovieListActivity : AppCompatActivity(), MovieItemClickListener, SwipeRefr
     }
 
     private fun updateList(movies: List<Movie>){
-        popularListAdapter.submitList(movies)
+        movieListAdapter.submitList(movies)
+    }
+
+    private fun setupOnScrollListener() {
+        val layoutManager = recyclerView.layoutManager as LinearLayoutManager
+        recyclerView.addOnScrollListener(object: RecyclerView.OnScrollListener(){
+            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                val totalItemCount = layoutManager.itemCount
+                val visibleItemCount = layoutManager.childCount
+                val firstVisibleItem = layoutManager.findFirstVisibleItemPosition()
+
+                if(firstVisibleItem + visibleItemCount >= totalItemCount){
+                    if(!isLoading){
+                        //TODO GET Movies(currentPage + 1)
+                        movieListViewModel.requestPopular(currentPage + 1)
+                        isLoading = true
+                    }
+                }
+            }
+        })
     }
 }

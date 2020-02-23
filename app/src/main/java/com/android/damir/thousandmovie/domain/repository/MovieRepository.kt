@@ -4,7 +4,7 @@ import com.android.damir.thousandmovie.domain.entity.Movie
 
 interface MovieRepository{
 
-    suspend fun getPopular(): List<Movie>
+    suspend fun getPopular(page: Int): List<Movie>
 
     suspend fun getDetails(id: Long): Movie?
 }

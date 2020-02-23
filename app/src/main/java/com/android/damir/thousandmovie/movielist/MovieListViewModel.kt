@@ -24,26 +24,33 @@ class MovieListViewModel(
     val isRefreshingLiveData: LiveData<Boolean>
         get() = _isRefreshingLiveData
 
+    private val _isLoadingLiveData = MutableLiveData<Boolean>()
+    val isLoadingLiveData: LiveData<Boolean>
+        get() = _isLoadingLiveData
+
+    private val _currentPageLiveData = MutableLiveData<Int>()
+    val currentPageLiveData: LiveData<Int>
+        get() = _currentPageLiveData
+
     init {
-        Timber.i("init")
         requestPopular()
     }
 
     fun refreshPopular(){
-        Timber.i("refreshPopular")
         _isRefreshingLiveData.value = true
-        Timber.i("isRefreshing ${_isRefreshingLiveData.value}")
         requestPopular()
     }
 
-    private fun requestPopular() {
-        Timber.i("requestPopular")
+    fun requestPopular(page: Int = 1) {
+        Timber.i("request popular, page = $page")
         viewModelScope.launch {
             val movies = withContext(Dispatchers.IO){
-                movieRepository.getPopular()
+                movieRepository.getPopular(page)
             }
             _popularListLiveData.value = movies
             _isRefreshingLiveData.value = false
+            _isLoadingLiveData.value = false
+            _currentPageLiveData.value = page
         }
     }
 }

@@ -20,15 +20,13 @@ class MovieRepositoryImpl(
 
     private val movieDao: RoomMovieDao = moviesDatabase.movieDao()
 
-    override suspend fun getPopular(): List<Movie> {
+    override suspend fun getPopular(page: Int): List<Movie> {
         val response = try {
-            movieService.getPopular()
+            movieService.getPopular(page)
         } catch (e: Exception){
-            Timber.e(e, "message%s", e.message)
-
+            Timber.e(e)
             return getLocalMovies()
         }
-
         val moviesList = response.results.map {
             val movie = apiMovieMapper.map(it)
             val roomMovie = movieToRoomMapper.map(movie)
@@ -36,7 +34,6 @@ class MovieRepositoryImpl(
 
             movie
         }
-
         return moviesList
     }
 
