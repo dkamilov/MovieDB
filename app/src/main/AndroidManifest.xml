@@ -1,12 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+<manifest
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    package="com.android.damir.thousandmovie">
+    package="com.android.damir.moviedb">
 
-    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.INTERNET" />
 
     <application
-        android:name=".MovieApplication"
+        android:name=".MovieDBApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
@@ -14,7 +15,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".movielist.MovieListActivity">
+        <activity android:name=".ui.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -22,8 +23,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".moviedetails.MovieDetailsActivity"
-            android:parentActivityName=".movielist.MovieListActivity"/>
+            android:name="com.android.damir.moviedb.ui.details.MovieDetailsActivity"/>
     </application>
 
 </manifest>
