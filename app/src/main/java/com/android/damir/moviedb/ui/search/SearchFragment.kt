@@ -1,0 +1,7 @@
+package com.android.damir.moviedb.ui.search
+
+import androidx.fragment.app.Fragment
+
+class SearchFragment : Fragment() {
+
+}
