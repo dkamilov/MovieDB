@@ -1,4 +1,4 @@
-package com.android.damir.moviedb.paging
+package com.android.damir.moviedb.ui.home.paging
 
 import androidx.paging.PageKeyedDataSource
 import com.android.damir.moviedb.domain.entity.Movie

@@ -42,6 +42,18 @@ class MovieRepositoryImpl(
         return response.categories
     }
 
+    override suspend fun getMoviesByCategory(id: Long): List<Movie> {
+        val response = try {
+            movieService.getMoviesByCategory(id)
+        }catch (e: Exception) {
+            Timber.i(e)
+            return emptyList()
+        }
+        return response.results.map {
+            apiMovieMapper.map(it)
+        }
+    }
+
     override suspend fun getDetails(id: Long): Movie? {
         return movieDao.getDetails(id) ?: return requestMovie(id)
     }

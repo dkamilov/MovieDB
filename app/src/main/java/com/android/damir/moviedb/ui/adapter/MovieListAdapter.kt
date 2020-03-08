@@ -7,12 +7,12 @@ import com.android.damir.moviedb.R
 import com.android.damir.moviedb.domain.entity.Movie
 
 class MovieListAdapter(
-    private val movieItemClickListener: MovieItemClickListener
+    private val onMovieItemClickListener: OnMovieItemClickListener
 ): PagedListAdapter<Movie, MovieItemViewHolder>(MovieDiffUtil) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MovieItemViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.item_movie, parent, false)
-        return MovieItemViewHolder(view, movieItemClickListener)
+        return MovieItemViewHolder(view, onMovieItemClickListener)
     }
 
     override fun onBindViewHolder(holder: MovieItemViewHolder, position: Int) {

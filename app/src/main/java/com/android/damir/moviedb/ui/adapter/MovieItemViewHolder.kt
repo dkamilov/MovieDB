@@ -6,7 +6,7 @@ import com.android.damir.moviedb.domain.entity.Movie
 import com.android.damir.moviedb.utils.load
 import kotlinx.android.synthetic.main.item_movie.view.*
 
-class MovieItemViewHolder(itemView: View, private val listener: MovieItemClickListener) : RecyclerView.ViewHolder(itemView){
+class MovieItemViewHolder(itemView: View, private val listener: OnMovieItemClickListener) : RecyclerView.ViewHolder(itemView){
 
     private val title = itemView.title
     private val backdropImg = itemView.backdropImg
@@ -19,11 +19,11 @@ class MovieItemViewHolder(itemView: View, private val listener: MovieItemClickLi
         voteAverage.text = item.voteAverage
         backdropImg.load(item.backdropPath)
         itemView.setOnClickListener {
-            listener.movieItemClicked(item)
+            listener.onMovieItemClicked(item)
         }
     }
 }
 
-interface MovieItemClickListener{
-    fun movieItemClicked(movie: Movie)
+interface OnMovieItemClickListener{
+    fun onMovieItemClicked(movie: Movie)
 }

@@ -8,7 +8,9 @@ import com.android.damir.moviedb.ui.categories.CategoriesFragment
 import com.android.damir.moviedb.ui.favorites.FavoritesFragment
 import com.android.damir.moviedb.ui.home.HomeFragment
 import com.android.damir.moviedb.ui.search.SearchFragment
+import com.android.damir.moviedb.utils.TAG_CATEGORIES
 import kotlinx.android.synthetic.main.activity_main.*
+import timber.log.Timber
 
 class MainActivity : AppCompatActivity() {
 
@@ -22,10 +24,10 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun loadFragment(fragment: Fragment) {
+    private fun loadFragment(fragment: Fragment, tag: String? = null) {
         supportFragmentManager
             .beginTransaction()
-            .replace(R.id.fragment_container, fragment)
+            .replace(R.id.fragment_container, fragment, tag)
             .commit()
     }
 
@@ -37,7 +39,7 @@ class MainActivity : AppCompatActivity() {
                     true
                 }
                 R.id.categories -> {
-                    loadFragment(CategoriesFragment())
+                    loadFragment(CategoriesFragment(), TAG_CATEGORIES)
                     true
                 }
                 R.id.search -> {

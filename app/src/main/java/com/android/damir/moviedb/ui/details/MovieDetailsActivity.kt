@@ -8,10 +8,10 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.android.damir.moviedb.R
 import com.android.damir.moviedb.domain.entity.Movie
+import com.android.damir.moviedb.utils.MOVIE_ID_EXTRA
 import com.android.damir.moviedb.utils.load
 import kotlinx.android.synthetic.main.activity_movie_detail.*
 
-const val MOVIE_ID_EXTRA = "movie_id"
 
 class MovieDetailsActivity : AppCompatActivity() {
 
@@ -21,7 +21,13 @@ class MovieDetailsActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_movie_detail)
 
+        setupToolbar()
         setupObservers()
+    }
+
+    private fun setupToolbar() {
+        setSupportActionBar(toolbar)
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
     }
 
     private fun setupObservers() {

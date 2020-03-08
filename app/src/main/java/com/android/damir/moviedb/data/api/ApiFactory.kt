@@ -13,6 +13,7 @@ object ApiFactory {
             .url()
             .newBuilder()
             .addQueryParameter("api_key", "44e56ddebe9a0e483337cefbfbd812f5")
+            .addQueryParameter("language", "ru-RU")
             .build()
 
         val newRequest = chain.request()

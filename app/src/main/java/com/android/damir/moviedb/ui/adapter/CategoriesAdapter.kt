@@ -11,7 +11,9 @@ import com.android.damir.moviedb.R
 import com.android.damir.moviedb.data.api.Category
 import kotlinx.android.synthetic.main.item_category.view.*
 
-class CategoriesAdapter : ListAdapter<Category, CategoryHolder>(CategoryDiffUtil){
+class CategoriesAdapter(
+    private val categoryClickListener: OnCategoryClickListener
+) : ListAdapter<Category, CategoryHolder>(CategoryDiffUtil){
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CategoryHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.item_category, parent, false)
@@ -21,6 +23,9 @@ class CategoriesAdapter : ListAdapter<Category, CategoryHolder>(CategoryDiffUtil
     override fun onBindViewHolder(holder: CategoryHolder, position: Int) {
         val category = getItem(position)
         holder.category.text = category.name
+        holder.itemView.setOnClickListener {
+            categoryClickListener.onCategoryClicked(category)
+        }
     }
 
 }
@@ -39,4 +44,8 @@ object CategoryDiffUtil : DiffUtil.ItemCallback<Category>(){
         return oldItem == newItem
     }
 
+}
+
+interface OnCategoryClickListener {
+    fun onCategoryClicked(category: Category)
 }

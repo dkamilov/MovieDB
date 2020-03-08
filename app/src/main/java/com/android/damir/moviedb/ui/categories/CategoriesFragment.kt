@@ -7,14 +7,18 @@ import com.android.damir.moviedb.R
 import com.android.damir.moviedb.data.api.Category
 import com.android.damir.moviedb.ui.BaseFragment
 import com.android.damir.moviedb.ui.adapter.CategoriesAdapter
+import com.android.damir.moviedb.ui.adapter.OnCategoryClickListener
+import com.android.damir.moviedb.utils.CATEGORY_ID_EXTRA
+import com.android.damir.moviedb.utils.CATEGORY_NAME_EXTRA
+import com.android.damir.moviedb.utils.showMovieByCategory
 import kotlinx.android.synthetic.main.fragment_categories.*
+import timber.log.Timber
 
-class CategoriesFragment : BaseFragment() {
+class CategoriesFragment : BaseFragment(), OnCategoryClickListener {
 
-    //TODO: 1.Category item style
-    //TODO: 2.Category item click
-    //TODO: 3.Discover movie by category
-    //TODO: 4.Query images of movie(without language query)
+    //TODO: 2.Setup right fragmentManager with categories and by category
+    //TODO: 3.Query images of movie(without language query)
+    //TODO: 4.Paging in movie by category
 
     private lateinit var categoriesAdapter: CategoriesAdapter
     private lateinit var categoriesViewModel: CategoriesViewModel
@@ -28,13 +32,26 @@ class CategoriesFragment : BaseFragment() {
         super.onActivityCreated(savedInstanceState)
     }
 
+    override fun onCategoryClicked(category: Category) {
+        val bundle = Bundle().apply {
+            putLong(CATEGORY_ID_EXTRA, category.id.toLong())
+            putString(CATEGORY_NAME_EXTRA, category.name)
+        }
+        val fragment = MovieByCategoryFragment().apply {
+            arguments = bundle
+        }
+        requireActivity()
+            .supportFragmentManager
+            .showMovieByCategory(R.id.fragment_container, fragment)
+    }
+
     private fun setupToolbar() {
         (activity as AppCompatActivity).setSupportActionBar(toolbar)
         (activity as AppCompatActivity).supportActionBar?.title = resources.getString(R.string.categories)
     }
 
     private fun setupRecyclerView() {
-        categoriesAdapter = CategoriesAdapter()
+        categoriesAdapter = CategoriesAdapter(this)
         recyclerView.adapter = categoriesAdapter
     }
 
@@ -48,5 +65,4 @@ class CategoriesFragment : BaseFragment() {
     private fun updateList(categories: List<Category>?) {
         categoriesAdapter.submitList(categories)
     }
-
 }
