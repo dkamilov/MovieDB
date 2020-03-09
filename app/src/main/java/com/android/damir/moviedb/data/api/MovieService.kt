@@ -19,5 +19,8 @@ interface MovieService{
     suspend fun getCategories(): ApiCategory
 
     @GET("discover/movie?sort_by=popularity.desc")
-    suspend fun getMoviesByCategory(@Query("with_genres") id: Long): ApiResponse
+    suspend fun getMoviesByCategory(
+        @Query("with_genres") id: Long,
+        @Query("page") page: Int
+    ): ApiResponse
 }

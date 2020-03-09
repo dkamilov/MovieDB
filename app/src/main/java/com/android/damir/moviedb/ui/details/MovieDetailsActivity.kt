@@ -49,7 +49,7 @@ class MovieDetailsActivity : AppCompatActivity() {
         overview.text = movie.overview
     }
 
-    fun newIntent(context: Context, movieId: Long): Intent{
+    fun newIntent(context: Context, movieId: Long?): Intent{
         val intent = Intent(context, this@MovieDetailsActivity::class.java)
         intent.putExtra(MOVIE_ID_EXTRA, movieId)
         return intent

@@ -1,29 +1,24 @@
 package com.android.damir.moviedb.ui.categories
 
 import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import androidx.paging.PagedList
 import com.android.damir.moviedb.domain.entity.Movie
-import com.android.damir.moviedb.domain.repository.MovieRepositoryImpl
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
+import com.android.damir.moviedb.ui.categories.paging.CategoryPagedListProvider
+import com.android.damir.moviedb.ui.categories.paging.DataSourceFactory
 
 class MovieByCategoryViewModel(
-    private val movieRepository: MovieRepositoryImpl = MovieRepositoryImpl()
+    id: Long
 ) : ViewModel() {
 
-    private val moviesByCategory = MutableLiveData<List<Movie>>()
+    private val factory = DataSourceFactory(id, viewModelScope)
 
-    fun getMoviesByCategory(id: Long): LiveData<List<Movie>> {
-        viewModelScope.launch {
-            val movies = withContext(Dispatchers.IO){
-                movieRepository.getMoviesByCategory(id)
-            }
-            moviesByCategory.value = movies
-        }
-        return moviesByCategory
+    private val _movies = CategoryPagedListProvider(factory).provide()
+    val movies: LiveData<PagedList<Movie>>
+        get() = _movies
+
+    fun refreshMovies() {
+        factory.moviesLiveData.value?.invalidate()
     }
-
 }

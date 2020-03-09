@@ -30,8 +30,8 @@ class LatestFragment : BaseFragment(), OnMovieItemClickListener{
         super.onActivityCreated(savedInstanceState)
     }
 
-    override fun onMovieItemClicked(movie: Movie) {
-        val intent = MovieDetailsActivity().newIntent(requireContext(), movie.id.toLong())
+    override fun onMovieItemClicked(movie: Movie?) {
+        val intent = MovieDetailsActivity().newIntent(requireContext(), movie?.id?.toLong())
         startActivity(intent)
     }
 

@@ -12,7 +12,7 @@ import com.android.damir.moviedb.data.api.Category
 import kotlinx.android.synthetic.main.item_category.view.*
 
 class CategoriesAdapter(
-    private val categoryClickListener: OnCategoryClickListener
+    private val listener: OnCategoryClickListener
 ) : ListAdapter<Category, CategoryHolder>(CategoryDiffUtil){
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CategoryHolder {
@@ -24,7 +24,7 @@ class CategoriesAdapter(
         val category = getItem(position)
         holder.category.text = category.name
         holder.itemView.setOnClickListener {
-            categoryClickListener.onCategoryClicked(category)
+            listener.onCategoryClicked(category)
         }
     }
 

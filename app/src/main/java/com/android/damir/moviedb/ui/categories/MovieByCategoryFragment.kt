@@ -4,6 +4,8 @@ import android.content.res.Configuration
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
+import androidx.paging.PagedList
 import androidx.recyclerview.widget.GridLayoutManager
 import com.android.damir.moviedb.R
 import com.android.damir.moviedb.domain.entity.Movie
@@ -30,8 +32,8 @@ class MovieByCategoryFragment : BaseFragment(), OnMovieItemClickListener {
         super.onActivityCreated(savedInstanceState)
     }
 
-    override fun onMovieItemClicked(movie: Movie) {
-        val intent = MovieDetailsActivity().newIntent(requireContext(), movie.id.toLong())
+    override fun onMovieItemClicked(movie: Movie?) {
+        val intent = MovieDetailsActivity().newIntent(requireContext(), movie?.id?.toLong())
         startActivity(intent)
     }
 
@@ -60,13 +62,14 @@ class MovieByCategoryFragment : BaseFragment(), OnMovieItemClickListener {
 
     private fun setupObservers() {
         val id = arguments?.getLong(CATEGORY_ID_EXTRA)
-        movieByCategoryViewModel = MovieByCategoryViewModel()
-        movieByCategoryViewModel.getMoviesByCategory(id!!).observe(viewLifecycleOwner, Observer {
+        val factory = MovieByCategoryViewModelFactory(id!!)
+        movieByCategoryViewModel = ViewModelProvider(this, factory).get(MovieByCategoryViewModel::class.java)
+        movieByCategoryViewModel.movies.observe(viewLifecycleOwner, Observer {
             updateList(it)
         })
     }
 
-    private fun updateList(movies: List<Movie>) {
-        movieListAdapter.setItems(movies)
+    private fun updateList(movies: PagedList<Movie>) {
+        movieListAdapter.submitList(movies)
     }
 }

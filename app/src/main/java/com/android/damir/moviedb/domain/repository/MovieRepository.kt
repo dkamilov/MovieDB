@@ -9,7 +9,7 @@ interface MovieRepository{
 
     suspend fun getCategories(): List<Category>?
 
-    suspend fun getMoviesByCategory(id: Long) : List<Movie>
+    suspend fun getMoviesByCategory(id: Long, page: Int) : List<Movie>
 
     suspend fun getDetails(id: Long): Movie?
 }

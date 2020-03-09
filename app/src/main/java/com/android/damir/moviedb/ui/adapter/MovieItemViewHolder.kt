@@ -13,11 +13,11 @@ class MovieItemViewHolder(itemView: View, private val listener: OnMovieItemClick
     private val releaseDate = itemView.releaseDate
     private val voteAverage = itemView.voteAverage
 
-    fun bind(item: Movie){
-        title.text = item.title
-        releaseDate.text = item.releaseDate
-        voteAverage.text = item.voteAverage
-        backdropImg.load(item.backdropPath)
+    fun bind(item: Movie?){
+        title.text = item?.title
+        releaseDate.text = item?.releaseDate
+        voteAverage.text = item?.voteAverage
+        backdropImg.load(item?.backdropPath)
         itemView.setOnClickListener {
             listener.onMovieItemClicked(item)
         }
@@ -25,5 +25,5 @@ class MovieItemViewHolder(itemView: View, private val listener: OnMovieItemClick
 }
 
 interface OnMovieItemClickListener{
-    fun onMovieItemClicked(movie: Movie)
+    fun onMovieItemClicked(movie: Movie?)
 }

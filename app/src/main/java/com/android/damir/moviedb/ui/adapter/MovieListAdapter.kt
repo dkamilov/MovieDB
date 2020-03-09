@@ -17,6 +17,6 @@ class MovieListAdapter(
 
     override fun onBindViewHolder(holder: MovieItemViewHolder, position: Int) {
         val item = getItem(position)
-        holder.bind(item!!)
+        holder.bind(item)
     }
 }

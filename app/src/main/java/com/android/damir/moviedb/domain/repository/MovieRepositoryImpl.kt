@@ -32,19 +32,19 @@ class MovieRepositoryImpl(
         return movies
     }
 
-    override suspend fun getCategories(): List<Category>? {
+    override suspend fun getCategories(): List<Category> {
         val response = try {
             movieService.getCategories()
         }catch (e: Exception){
             Timber.e(e)
-            return null
+            return emptyList()
         }
         return response.categories
     }
 
-    override suspend fun getMoviesByCategory(id: Long): List<Movie> {
+    override suspend fun getMoviesByCategory(id: Long, page: Int): List<Movie> {
         val response = try {
-            movieService.getMoviesByCategory(id)
+            movieService.getMoviesByCategory(id, page)
         }catch (e: Exception) {
             Timber.i(e)
             return emptyList()

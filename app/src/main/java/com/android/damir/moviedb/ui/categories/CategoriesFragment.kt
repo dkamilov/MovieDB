@@ -3,6 +3,7 @@ package com.android.damir.moviedb.ui.categories
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
 import com.android.damir.moviedb.R
 import com.android.damir.moviedb.data.api.Category
 import com.android.damir.moviedb.ui.BaseFragment
@@ -16,9 +17,9 @@ import timber.log.Timber
 
 class CategoriesFragment : BaseFragment(), OnCategoryClickListener {
 
-    //TODO: 2.Setup right fragmentManager with categories and by category
     //TODO: 3.Query images of movie(without language query)
-    //TODO: 4.Paging in movie by category
+    //TODO: 4.Paging in movie by category(add "page" argument if need)
+    //TODO: 5.Add SwipeRefresh to MovieByCategory
 
     private lateinit var categoriesAdapter: CategoriesAdapter
     private lateinit var categoriesViewModel: CategoriesViewModel
@@ -56,13 +57,13 @@ class CategoriesFragment : BaseFragment(), OnCategoryClickListener {
     }
 
     private fun setupObservers() {
-        categoriesViewModel = CategoriesViewModel()
+        categoriesViewModel = ViewModelProvider(this).get(CategoriesViewModel::class.java)
         categoriesViewModel.getCategories().observe(viewLifecycleOwner, Observer{
             updateList(it)
         })
     }
 
-    private fun updateList(categories: List<Category>?) {
+    private fun updateList(categories: List<Category>) {
         categoriesAdapter.submitList(categories)
     }
 }
