@@ -1,6 +1,7 @@
 package com.android.damir.moviedb.ui.home.latest
 
 
+import android.content.Context
 import android.content.res.Configuration
 import android.os.Bundle
 import androidx.lifecycle.Observer
@@ -12,16 +13,17 @@ import com.android.damir.moviedb.domain.entity.Movie
 import com.android.damir.moviedb.ui.adapter.OnMovieItemClickListener
 import com.android.damir.moviedb.ui.adapter.MovieListAdapter
 import com.android.damir.moviedb.ui.BaseFragment
+import com.android.damir.moviedb.utils.ProgressBarController
 import com.android.damir.moviedb.ui.details.MovieDetailsActivity
 import kotlinx.android.synthetic.main.fragment_latest.*
 
 
-class LatestFragment : BaseFragment(), OnMovieItemClickListener{
+class LatestFragment : BaseFragment() {
 
     private lateinit var latestViewModel: LatestViewModel
     private lateinit var movieListAdapter: MovieListAdapter
-    override val layoutRes: Int = R.layout.fragment_latest
 
+    override val layoutRes: Int = R.layout.fragment_latest
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         setupRecyclerView()
@@ -30,13 +32,8 @@ class LatestFragment : BaseFragment(), OnMovieItemClickListener{
         super.onActivityCreated(savedInstanceState)
     }
 
-    override fun onMovieItemClicked(movie: Movie?) {
-        val intent = MovieDetailsActivity().newIntent(requireContext(), movie?.id?.toLong())
-        startActivity(intent)
-    }
-
     private fun setupRecyclerView() {
-        movieListAdapter = MovieListAdapter(this)
+        movieListAdapter = MovieListAdapter(this, progressBarController)
         recyclerView.adapter = movieListAdapter
         if(resources.configuration.orientation == Configuration.ORIENTATION_LANDSCAPE){
             recyclerView.layoutManager = GridLayoutManager(requireContext(), 3)

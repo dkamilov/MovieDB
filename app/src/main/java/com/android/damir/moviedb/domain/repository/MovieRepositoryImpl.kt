@@ -58,6 +58,18 @@ class MovieRepositoryImpl(
         return movieDao.getDetails(id) ?: return requestMovie(id)
     }
 
+    override suspend fun searchMovies(query: String, page: Int): List<Movie> {
+        try{
+            val response = movieService.searchMovies(query, page)
+            return response.results.map {
+                apiMovieMapper.map(it)
+            }
+        }catch(e: Exception){
+            Timber.i(e)
+        }
+        return emptyList()
+    }
+
     private suspend fun getLocalMovies(type: String): List<Movie> {
         return movieDao.getMovies(type)
     }

@@ -3,10 +3,15 @@ package com.android.damir.moviedb.ui.adapter
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView
 import com.android.damir.moviedb.domain.entity.Movie
+import com.android.damir.moviedb.utils.ProgressBarController
 import com.android.damir.moviedb.utils.load
 import kotlinx.android.synthetic.main.item_movie.view.*
 
-class MovieItemViewHolder(itemView: View, private val listener: OnMovieItemClickListener) : RecyclerView.ViewHolder(itemView){
+class MovieViewHolder(
+    itemView: View,
+    private val listener: OnMovieItemClickListener,
+    private val progressBarController: ProgressBarController? = null
+) : RecyclerView.ViewHolder(itemView){
 
     private val title = itemView.title
     private val backdropImg = itemView.backdropImg
@@ -21,6 +26,7 @@ class MovieItemViewHolder(itemView: View, private val listener: OnMovieItemClick
         itemView.setOnClickListener {
             listener.onMovieItemClicked(item)
         }
+        progressBarController?.setProgressVisibility(false)
     }
 }
 

@@ -6,6 +6,10 @@ import timber.log.Timber
 
 class MovieDBApplication : Application(){
 
+    //TODO: 1.Add favorites fragment
+    //TODO: 3.Query images of movie(without language query)
+    //TODO: 4.Try CardView for items
+
     override fun onCreate() {
         super.onCreate()
         if(BuildConfig.DEBUG){

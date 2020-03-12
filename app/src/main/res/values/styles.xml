@@ -12,6 +12,7 @@
         <item name="colorOnBackground">@color/white</item>
         <item name="colorOnSurface">@color/white</item>
         <item name="android:windowBackground">@color/windowBackground</item>
+        <item name="android:textColorPrimary">@color/white</item>
         <item name="fontFamily">sans-serif</item>
     </style>
 

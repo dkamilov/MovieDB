@@ -9,10 +9,12 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.android.damir.moviedb.R
 import com.android.damir.moviedb.data.api.Category
+import com.android.damir.moviedb.utils.ProgressBarController
 import kotlinx.android.synthetic.main.item_category.view.*
 
 class CategoriesAdapter(
-    private val listener: OnCategoryClickListener
+    private val listener: OnCategoryClickListener,
+    private val progressBarController: ProgressBarController? = null
 ) : ListAdapter<Category, CategoryHolder>(CategoryDiffUtil){
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CategoryHolder {
@@ -26,6 +28,7 @@ class CategoriesAdapter(
         holder.itemView.setOnClickListener {
             listener.onCategoryClicked(category)
         }
+        progressBarController?.setProgressVisibility(false)
     }
 
 }

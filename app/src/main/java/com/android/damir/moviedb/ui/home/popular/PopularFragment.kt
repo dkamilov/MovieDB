@@ -8,18 +8,18 @@ import androidx.paging.PagedList
 import androidx.recyclerview.widget.GridLayoutManager
 import com.android.damir.moviedb.R
 import com.android.damir.moviedb.domain.entity.Movie
-import com.android.damir.moviedb.ui.adapter.OnMovieItemClickListener
-import com.android.damir.moviedb.ui.adapter.MovieListAdapter
 import com.android.damir.moviedb.ui.BaseFragment
+import com.android.damir.moviedb.ui.adapter.MovieListAdapter
+import com.android.damir.moviedb.ui.adapter.OnMovieItemClickListener
 import com.android.damir.moviedb.ui.details.MovieDetailsActivity
 import kotlinx.android.synthetic.main.fragment_popular.*
 
-class PopularFragment : BaseFragment(), OnMovieItemClickListener {
+class PopularFragment : BaseFragment() {
 
     private lateinit var movieListAdapter: MovieListAdapter
     private lateinit var popularViewModel: PopularViewModel
-    override val layoutRes: Int
-        get() = R.layout.fragment_popular
+
+    override val layoutRes: Int = R.layout.fragment_popular
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         setupRecyclerView()
@@ -28,13 +28,8 @@ class PopularFragment : BaseFragment(), OnMovieItemClickListener {
         super.onActivityCreated(savedInstanceState)
     }
 
-    override fun onMovieItemClicked(movie: Movie?) {
-        val intent = MovieDetailsActivity().newIntent(requireContext(), movie?.id?.toLong())
-        startActivity(intent)
-    }
-
     private fun setupRecyclerView(){
-        movieListAdapter = MovieListAdapter(this)
+        movieListAdapter = MovieListAdapter(this, progressBarController)
         recyclerView.adapter = movieListAdapter
         if(resources.configuration.orientation == Configuration.ORIENTATION_LANDSCAPE){
             recyclerView.layoutManager = GridLayoutManager(requireContext(), 3)

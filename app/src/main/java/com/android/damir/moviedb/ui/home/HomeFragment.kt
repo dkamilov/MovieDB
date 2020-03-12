@@ -1,17 +1,11 @@
 package com.android.damir.moviedb.ui.home
 
-import android.content.Context
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
-import androidx.fragment.app.Fragment
+import androidx.appcompat.app.AppCompatActivity
 import com.android.damir.moviedb.R
 import com.android.damir.moviedb.ui.BaseFragment
 import com.google.android.material.tabs.TabLayoutMediator
 import kotlinx.android.synthetic.main.fragment_home.*
-import timber.log.Timber
 
 class HomeFragment : BaseFragment() {
 

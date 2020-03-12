@@ -1,7 +1,10 @@
 package com.android.damir.moviedb.utils
 
+import android.content.Context
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
+import android.view.inputmethod.InputMethodManager
+import android.widget.EditText
 import android.widget.ImageView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
@@ -17,6 +20,11 @@ fun ImageView.load(url: String?){
         .placeholder(ColorDrawable(Color.GRAY))
         .transition(DrawableTransitionOptions.withCrossFade())
         .into(this)
+}
+
+fun EditText.showKeyboard() {
+    val imm = this.context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+    imm.showSoftInput(this, InputMethodManager.SHOW_IMPLICIT)
 }
 
 fun FragmentManager.showMovieByCategory(container: Int, fragment: Fragment) {

@@ -1,4 +1,4 @@
-package com.android.damir.moviedb.ui.categories.paging
+package com.android.damir.moviedb.ui.search.paging
 
 import androidx.lifecycle.MutableLiveData
 import androidx.paging.DataSource
@@ -6,15 +6,16 @@ import com.android.damir.moviedb.domain.entity.Movie
 import kotlinx.coroutines.CoroutineScope
 
 class DataSourceFactory (
-    private val id: Long,
+    private val query: String,
     private val coroutineScope: CoroutineScope
 ): DataSource.Factory<Int, Movie>() {
-    val moviesLiveData = MutableLiveData<CategoryPageDataSource>()
+
+    val moviesLiveData = MutableLiveData<SearchPageDataSource>()
 
     override fun create(): DataSource<Int, Movie> {
-        val categoryPageDataSource = CategoryPageDataSource(id, coroutineScope)
-        moviesLiveData.postValue(categoryPageDataSource)
-        return categoryPageDataSource
+        val searchPageDataSource = SearchPageDataSource(query, coroutineScope)
+        moviesLiveData.postValue(searchPageDataSource)
+        return searchPageDataSource
     }
 
 }

@@ -23,4 +23,10 @@ interface MovieService{
         @Query("with_genres") id: Long,
         @Query("page") page: Int
     ): ApiResponse
+
+    @GET("search/movie")
+    suspend fun searchMovies(
+        @Query("query") query: String,
+        @Query("page") page: Int
+    ): ApiResponse
 }
