@@ -13,8 +13,7 @@ import com.android.damir.moviedb.utils.ProgressBarController
 import com.android.damir.moviedb.utils.TAG_CATEGORIES
 import kotlinx.android.synthetic.main.activity_main.*
 
-class MainActivity : AppCompatActivity(),
-    ProgressBarController {
+class MainActivity : AppCompatActivity(), ProgressBarController{
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

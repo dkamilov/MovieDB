@@ -4,10 +4,10 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.paging.PagedList
-import com.android.damir.moviedb.utils.MOVIE_TOP_RATED
 import com.android.damir.moviedb.domain.entity.Movie
 import com.android.damir.moviedb.ui.home.paging.DataSourceFactory
 import com.android.damir.moviedb.ui.home.paging.MoviePagedListProvider
+import com.android.damir.moviedb.utils.MOVIE_TOP_RATED
 
 class TopRatedViewModel : ViewModel(){
 

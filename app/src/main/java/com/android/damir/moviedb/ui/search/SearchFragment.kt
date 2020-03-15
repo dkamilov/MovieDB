@@ -12,6 +12,7 @@ import com.android.damir.moviedb.R
 import com.android.damir.moviedb.domain.entity.Movie
 import com.android.damir.moviedb.ui.BaseFragment
 import com.android.damir.moviedb.ui.adapter.MovieListAdapter
+import com.android.damir.moviedb.utils.hideKeyboard
 import com.android.damir.moviedb.utils.showKeyboard
 import kotlinx.android.synthetic.main.fragment_search.*
 
@@ -40,10 +41,14 @@ class SearchFragment : BaseFragment() {
         search_edit_text.setOnEditorActionListener { v, actionId, event ->
             if(actionId == EditorInfo.IME_ACTION_SEARCH){
                 searchMovie(v.text.toString())
+                hideKeyboard(search_edit_text)
             }
             false
         }
-        search_edit_text.showKeyboard()
+        clear_search_text.setOnClickListener {
+            search_edit_text.text = null
+        }
+        showKeyboard(search_edit_text)
     }
 
     private fun setupToolbar() {
@@ -51,7 +56,7 @@ class SearchFragment : BaseFragment() {
     }
 
     private fun setupRecyclerView() {
-        movieListAdapter = MovieListAdapter(this)
+        movieListAdapter = MovieListAdapter(this, progressBarController)
         recyclerView.adapter = movieListAdapter
         if(resources.configuration.orientation == Configuration.ORIENTATION_LANDSCAPE){
             recyclerView.layoutManager = GridLayoutManager(requireContext(), 3)

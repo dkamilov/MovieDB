@@ -10,8 +10,6 @@ import com.android.damir.moviedb.R
 import com.android.damir.moviedb.domain.entity.Movie
 import com.android.damir.moviedb.ui.BaseFragment
 import com.android.damir.moviedb.ui.adapter.MovieListAdapter
-import com.android.damir.moviedb.ui.adapter.OnMovieItemClickListener
-import com.android.damir.moviedb.ui.details.MovieDetailsActivity
 import kotlinx.android.synthetic.main.fragment_popular.*
 
 class PopularFragment : BaseFragment() {

@@ -1,7 +1,8 @@
 package com.android.damir.moviedb.ui.favorites
 
-import androidx.fragment.app.Fragment
+import com.android.damir.moviedb.R
+import com.android.damir.moviedb.ui.BaseFragment
 
-class FavoritesFragment : Fragment() {
-
+class FavoritesFragment : BaseFragment() {
+    override val layoutRes: Int = R.layout.fragment_favorites
 }

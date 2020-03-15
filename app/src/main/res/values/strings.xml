@@ -8,4 +8,5 @@
     <string name="categories">Категории</string>
     <string name="search">Поиск</string>
     <string name="favorites">Понравилось</string>
+    <string name="add_to_favorites">В избранное</string>
 </resources>

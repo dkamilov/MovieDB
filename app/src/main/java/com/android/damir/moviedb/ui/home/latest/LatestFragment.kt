@@ -1,7 +1,6 @@
 package com.android.damir.moviedb.ui.home.latest
 
 
-import android.content.Context
 import android.content.res.Configuration
 import android.os.Bundle
 import androidx.lifecycle.Observer
@@ -10,11 +9,8 @@ import androidx.paging.PagedList
 import androidx.recyclerview.widget.GridLayoutManager
 import com.android.damir.moviedb.R
 import com.android.damir.moviedb.domain.entity.Movie
-import com.android.damir.moviedb.ui.adapter.OnMovieItemClickListener
-import com.android.damir.moviedb.ui.adapter.MovieListAdapter
 import com.android.damir.moviedb.ui.BaseFragment
-import com.android.damir.moviedb.utils.ProgressBarController
-import com.android.damir.moviedb.ui.details.MovieDetailsActivity
+import com.android.damir.moviedb.ui.adapter.MovieListAdapter
 import kotlinx.android.synthetic.main.fragment_latest.*
 
 

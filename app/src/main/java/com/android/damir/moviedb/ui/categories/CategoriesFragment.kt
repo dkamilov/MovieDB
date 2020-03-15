@@ -1,6 +1,5 @@
 package com.android.damir.moviedb.ui.categories
 
-import android.content.Context
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
@@ -12,10 +11,8 @@ import com.android.damir.moviedb.ui.adapter.CategoriesAdapter
 import com.android.damir.moviedb.ui.adapter.OnCategoryClickListener
 import com.android.damir.moviedb.utils.CATEGORY_ID_EXTRA
 import com.android.damir.moviedb.utils.CATEGORY_NAME_EXTRA
-import com.android.damir.moviedb.utils.ProgressBarController
 import com.android.damir.moviedb.utils.showMovieByCategory
 import kotlinx.android.synthetic.main.fragment_categories.*
-import timber.log.Timber
 
 class CategoriesFragment : BaseFragment(), OnCategoryClickListener {
 

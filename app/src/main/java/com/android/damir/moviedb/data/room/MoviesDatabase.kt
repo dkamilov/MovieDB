@@ -6,7 +6,9 @@ import androidx.room.Room
 import androidx.room.RoomDatabase
 import com.android.damir.moviedb.domain.entity.Movie
 
-@Database(entities = [Movie::class], version = 1)
+@Database(
+    entities = [Movie::class],
+    version = 1)
 abstract class MoviesDatabase: RoomDatabase(){
 
     companion object {

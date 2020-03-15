@@ -1,7 +1,6 @@
 package com.android.damir.moviedb.ui.categories.paging
 
 import androidx.paging.PageKeyedDataSource
-import com.android.damir.moviedb.data.api.Category
 import com.android.damir.moviedb.domain.entity.Movie
 import com.android.damir.moviedb.domain.repository.MovieRepositoryImpl
 import kotlinx.coroutines.CoroutineScope

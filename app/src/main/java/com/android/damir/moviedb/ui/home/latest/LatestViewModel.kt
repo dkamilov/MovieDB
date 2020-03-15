@@ -4,10 +4,10 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.paging.PagedList
-import com.android.damir.moviedb.utils.MOVIE_LATEST
 import com.android.damir.moviedb.domain.entity.Movie
 import com.android.damir.moviedb.ui.home.paging.DataSourceFactory
 import com.android.damir.moviedb.ui.home.paging.MoviePagedListProvider
+import com.android.damir.moviedb.utils.MOVIE_LATEST
 
 class LatestViewModel : ViewModel() {
 
